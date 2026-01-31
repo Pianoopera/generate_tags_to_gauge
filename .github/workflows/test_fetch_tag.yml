@@ -13,12 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create tags
-        run: |
-          git tag list1
-          git tag list2
-          git tag list3
-
       - name: Run custom action
         id: run-action
         uses: ./
