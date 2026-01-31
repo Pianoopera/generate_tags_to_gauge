@@ -1,0 +1,25 @@
+name: Run Custom Action
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  run-action:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run custom action
+        id: run-action
+        uses: ./
+        with:
+          version: "v0.2.0"
+
+      - name: Test list
+        if: ${{ steps.run-action.outputs.tags != 'list1|list2|list3' }}
+        run: |
+          echo "tags: ${{ steps.run-action.outputs.tags }}"
+          exit 1

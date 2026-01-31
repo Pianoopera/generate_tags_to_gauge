@@ -50,4 +50,7 @@
 ```shell
 # ファイル指定
 act pull_request -W .github/workflows/test_branch.yml
+
+# git コマンドを利用する場合
+act -P ubuntu-latest=catthehacker/ubuntu:act-latest pull_request -W .github/workflows/test_fetch_tag.yml
 ```
