@@ -1,6 +1,9 @@
 name: Run Custom Action v0.1.0 branch
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches: [main]
 
