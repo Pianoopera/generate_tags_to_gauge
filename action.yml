@@ -19,6 +19,7 @@ outputs:
     value: |
       ${{ steps.branch.outputs.tags }}
       ${{ steps.tag.outputs.tags }}
+      ${{ steps.newtag.outputs.tags }}
 
 runs:
   using: composite
@@ -55,8 +56,9 @@ runs:
     - name: new action
       if: ${{ inputs.version != 'v0.1.0' }}
       shell: bash
+      id: newtag
       run: |
         echo "Fetch tags from GitHub"
-        git fetch --tags
-        echo "tags=$(git fetch --tags > /dev/null 2>&1; git tag -l | paste -sd '|' -)" >> $GITHUB_OUTPUT
+        git fetch --tags > /dev/null 2>&1
+        echo "tags=$(git tag -l | paste -sd '|' -)" >> $GITHUB_OUTPUT
 
