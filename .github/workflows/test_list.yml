@@ -1,9 +1,6 @@
 name: Run Custom Action v0.1.0 tags
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches: [main]
 
