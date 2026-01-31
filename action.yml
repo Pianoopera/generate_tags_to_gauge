@@ -56,5 +56,7 @@ runs:
       if: ${{ inputs.version != 'v0.1.0' }}
       shell: bash
       run: |
+        echo "Fetch tags from GitHub"
+        git fetch --tags
         echo "tags=$(git fetch --tags > /dev/null 2>&1; git tag -l | paste -sd '|' -)" >> $GITHUB_OUTPUT
 
