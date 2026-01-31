@@ -8,6 +8,10 @@ inputs:
   github_tag:
     description: "GitHub tag command list"
     required: false
+  version:
+    description: "Version"
+    required: false
+    default: "v0.1.0"
 
 outputs:
   tags:
@@ -20,14 +24,14 @@ runs:
   using: composite
   steps:
     - name: OutPut from github branch
-      if: ${{ inputs.github_branch != '' && inputs.github_tag == '' }}
+      if: ${{ inputs.version == 'v0.1.0' && inputs.github_branch != '' && inputs.github_tag == '' }}
       shell: bash
       id: branch
       run: |
         echo "tags=$(echo ${{ inputs.github_branch }} | sed -e 's/feature\///g')" >> $GITHUB_OUTPUT
 
     - name: OutPut from github tag list
-      if: ${{ inputs.github_tag != '' && inputs.github_branch == '' }}
+      if: ${{ inputs.version == 'v0.1.0' && inputs.github_tag != '' && inputs.github_branch == '' }}
       shell: bash
       id: tag
       run: |
@@ -36,14 +40,21 @@ runs:
 
     - name: failure inputs
       shell: bash
-      if: ${{ inputs.github_branch == '' && inputs.github_tag == '' }}
+      if: ${{ inputs.version == 'v0.1.0' && inputs.github_branch == '' && inputs.github_tag == '' }}
       run: |
         echo "Please provide either github_branch or github_tag"
         exit 1
 
     - name: failure outputs
       shell: bash
-      if: ${{ steps.branch.outputs.tags == '' && steps.tag.outputs.tags == '' }}
+      if: ${{ inputs.version == 'v0.1.0' && steps.branch.outputs.tags == '' && steps.tag.outputs.tags == '' }}
       run: |
         echo "Please provide either github_branch or github_tag"
         exit 1
+
+    - name: new action
+      if: ${{ inputs.version != 'v0.1.0' }}
+      shell: bash
+      run: |
+        echo "tags=$(git fetch --tags > /dev/null 2>&1; git tag -l | paste -sd '|' -)" >> $GITHUB_OUTPUT
+
