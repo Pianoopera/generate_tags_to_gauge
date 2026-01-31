@@ -1,4 +1,4 @@
-name: Run Custom Action
+name: Run Custom Action v0.2.0 fetch tags
 
 on:
   pull_request:

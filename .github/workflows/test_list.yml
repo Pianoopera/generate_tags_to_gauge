@@ -1,4 +1,4 @@
-name: Run Custom Action
+name: Run Custom Action v0.1.0 tags
 
 on:
   pull_request:
